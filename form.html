@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add a New Book</title>
+</head>
+<body>
+    <h1>Add a New Book</h1>
+    <form action="http://localhost:8000/postBook" method="post">
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required><br>
+        <label for="Link">Cover Link</label>
+        <input type="text" id="Link" name="Link" required><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea><br>
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required><br>
+
+        <label for="count">Count:</label>
+        <input type="number" id="count" name="count" required><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="borrow">Borrow (comma-separated list):</label>
+        <input type="text" id="borrow" name="borrow"><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

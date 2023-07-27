@@ -1,0 +1,7 @@
+Name: Human-Computer Interaction
+Author: Elizabeth Lee
+Description: Understanding the relationship between humans and technology.
+Genre: Technology
+Count: 4
+Borrow:
+Cover Link: https://ik.imagekit.io/midknight/Library/This%20is%20A%20Book%20Cover%20(5).png?updatedAt=1690446789908
