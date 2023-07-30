@@ -28,7 +28,6 @@ class dbClass{
                 email: userEmail,
                 name: userName,
                 cart: [],
-                Orders: [],
                 myBooks: []
             });
             try {
@@ -65,21 +64,61 @@ class dbClass{
             console.log("Error Getting Books: ", error);
         }
     }
+    async search(limit) {
+        try {
+            const bL = await this.book.find().limit(limit).exec();
+            if(!bL) return [];
+            else return bL;
+        } catch(error) {
+            console.log("Error Getting Books: ", error);
+        }
+    }
     async addToCart(email, id) {
         try {
           const user = await this.user.findOne({ email: email }); // Find the user by email
           if (!user) {
             console.error("User not found.");
-            return null; // Return null if user not found
+            return {success: false, value: {}};
           }
-          user.cart.push(id);
-          const updatedUser = await user.save();
-          return updatedUser;
+          const index = user.cart.findIndex(cartItem => cartItem.toString() === id.toString());
+      
+          if (index >= 0) {
+            user.cart.splice(index, 1);
+          } else {
+            user.cart.push(id);
+          }
+          const savedUser = await user.save();
+          return {success: true, value: savedUser};
         } catch (error) {
           console.error("Error updating user's cart:", error);
-          return null; 
+          return {success: false, value: {}};
+        }
+    }
+    async addToMyBooks(email, _id,_time){
+        try {
+          const user = await this.user.findOne({ email: email }); // Find the user by email
+          const b = await this.book.findById(_id).exec();
+          if (!user) {
+            console.error("User not found.");
+            return {success: false, value: {}};
+          }
+          const index = user.myBooks.findIndex(bookItem => bookItem.id.toString() === _id.toString());
+          if (index < 0) {
+            user.myBooks.push({time: _time, id: _id});
+            if(b&&b.Borrow)b.Borrow.push(email);
+          } else {
+            user.myBooks.splice(index, 1);
+            if(b&&b.Borrow)b.Borrow = b.Borrow.filter(item => item != email);
+          }
+          const savedUser = await user.save();
+          if(b&&b.Borrow) await b.save();
+          return {success: true, value: savedUser};
+        } catch (error) {
+          console.error("Error updating user's cart:", error);
+          return {success: false, value: {}};
         }
       }
+      
 }
 
 module.exports = dbClass;

@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
     email: String,
     name: String,
     cart: Array,
-    Orders: Array,
     myBooks: Array
 });
 const bookSchema = new mongoose.Schema({

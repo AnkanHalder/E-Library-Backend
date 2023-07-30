@@ -28,17 +28,26 @@ app.route('/searchByCatagory/:cat').get((req,res)=>{
       res.send(bList);
   });
 });
+app.route('/search/:limit').get((req,res)=>{
+  dbClass.search(req.params.limit).then((b)=>{
+      res.send(b);
+  });
+});
 app.route('/searchByID/:id').get((req,res)=>{
   dbClass.searchByID(req.params.id).then((b)=>{
       res.send(b);
   });
 });
 app.route('/addToCart/:email/:id').get((req,res)=>{
-  dbClass.addToCart(req.params.email,req.params.id).then((user)=>{
-    res.send(user);
+  dbClass.addToCart(req.params.email,req.params.id).then((value)=>{
+    res.send(value); // value is success message 
   });
 });
-
+app.route('/addToMyBooks/:email/:id/:time').get((req,res)=>{
+  dbClass.addToMyBooks(req.params.email,req.params.id,req.params.time).then((value)=>{
+    res.send(value); // value is success message 
+  });
+});
 
 let port = process.env.PORT;
 if (port == null || port == "") {
